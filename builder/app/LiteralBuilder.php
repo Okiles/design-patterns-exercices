@@ -1,7 +1,8 @@
 <?php
+
 namespace App;
 
-class MySqlQueryBuilder implements QueryBuilder {
+class LiteralBuilder implements QueryBuilder {
     private $columns = [];
     private $table = "";
     private $conditions = [];
@@ -22,9 +23,9 @@ class MySqlQueryBuilder implements QueryBuilder {
     }
 
     public function build(): string {
-        $query = "SELECT " . implode(", ", $this->columns) . " FROM " . $this->table;
+        $query = "Je sélectionne les champs " . implode(", ", $this->columns) . " de la table " . $this->table;
         if (!empty($this->conditions)) {
-            $query .= " WHERE " . implode(" AND ", $this->conditions);
+            $query .= " où " . implode(" et ", $this->conditions);
         }
         return $query;
     }

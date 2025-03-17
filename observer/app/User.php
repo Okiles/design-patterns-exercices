@@ -2,18 +2,22 @@
 
 namespace App;
 
-class User 
-{
-    // Hors exercice mais notable:
-    // Promotion du constructeur: https://www.php.net/manual/fr/language.oop5.decon.php#language.oop5.decon.constructor.promotion
-    public function __construct(
-        private string $name,
-        private bool $notified = false
-    ) {}
+class User implements \SplObserver {
+    private string $name;
+    private bool $notified = false;
 
+    public function __construct(string $name) {
+        $this->name = $name;
+    }
 
-    public function isNotified(): bool
-    {
+    public function update(\SplSubject $subject): void {
+        if ($subject instanceof MusicBand) {
+            $this->notified = true;
+            echo "L'utilisateur {$this->name} a été notifié d'une nouvelle date de concert pour le groupe {$subject->getName()}.\n";
+        }
+    }
+
+    public function isNotified(): bool {
         return $this->notified;
     }
 }
